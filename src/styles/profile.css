@@ -1,0 +1,78 @@
+#banner {
+    position: relative;
+}
+
+#user-summary-header {
+    height: 5rem;
+    padding-left: 2%;
+    margin: 0px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#user-summary-details {
+    text-align: left;
+    margin: 0px;
+    width: 100%;
+}
+
+#user-summary-details .header > .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5em;
+    width: 4rem;
+    height: 4rem;
+    color: black;
+    background-color: white;
+    border-radius: 50%;
+    bottom: 100px;
+    left: 20px;
+    position: absolute;
+}
+
+#user-summary {
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    width: 20%;
+    margin-left: 5%;
+}
+
+#stats {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+#user-summary-details > .extra {
+    padding-top: 5%;
+}
+
+#user-summary h4, h3 {
+    margin: 0px;
+}
+
+
+#profile-circle {
+    margin: 0 auto;
+    display: flex;
+    justify-items: flex-start;
+    width: 80%;
+    position: absolute;
+    top: 250px;
+    left: 30px;
+}
+
+#profile-circle .icon {
+    margin: 0px;
+    background-color: white;
+    border-radius: 50%;
+}

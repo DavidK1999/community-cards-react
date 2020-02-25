@@ -1,25 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {useHistory} from 'react-router-dom';
+import {getCards} from './redux/actions/card';
+import Authenication from './components/Authentication';
+import CardCreator from './components/CardCreator';
+import 'semantic-ui-css/semantic.min.css'
+import Layout from './components/Layout';
+import './styles/base.css';
 
-function App() {
+const App = () => {
+    const dispatch = useDispatch();
+    const userPostCount = useSelector(state => state.user.user.createdPosts);
+    const userUpvotedCount = useSelector(state => state.user.user.upvotedPosts);
+    const userProfile = useSelector(state => state.user.userProfile);
+
+    useEffect(() => {
+        dispatch(getCards())
+    }, [dispatch, userPostCount, userUpvotedCount]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Authenication />
+      <Layout/>
+      <CardCreator/>
+    </>
   );
 }
 

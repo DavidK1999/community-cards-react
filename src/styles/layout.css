@@ -1,0 +1,32 @@
+#master-grid {
+    min-height: 1000vh;
+}
+
+#feed-menu {
+    margin: 0px;
+}
+
+#feed-menu .item {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+#feed-column {
+    padding: 0px;
+    height: 100%
+}
+
+#navigation-column {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0px;
+}
+
+#search-segment {
+    margin: 0px;
+}
+
+#search-segment .input {
+    width: 80%;
+}
