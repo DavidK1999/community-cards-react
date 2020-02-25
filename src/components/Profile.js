@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Header, Image, Icon, Card, Label } from 'semantic-ui-react';
 import '../styles/profile.css';
 import { useSelector, dispatch, useDispatch } from 'react-redux';
@@ -7,6 +7,7 @@ import ProfileCardList from './ProfileCardList';
 import { getUserProfile } from '../redux/actions/profile';
 
 const Profile = () => {
+    
     const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector(state => state.profile.userProfile);
@@ -42,7 +43,6 @@ const Profile = () => {
             </Card.Content>
         </Card>
         <div>
-        <button onClick={() => console.log(allCards)}>FILTERED</button>
             <ProfileCardList/>
         </div>
         </>

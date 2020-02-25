@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Card, Icon, Menu, Dropdown, Label, Divider} from 'semantic-ui-react';
 import CardManager from '../hooks/CardManager';
 import reactStringReplace from 'react-string-replace';
@@ -10,20 +10,30 @@ import { useHistory } from 'react-router-dom';
 
 const ProfileCardList = () => {
     const dispatch = useDispatch();
+    const filteredCards = useSelector(state => state.card.filteredCards);
+    const userUpvotedCount = useSelector(state => state.user.user.upvotedPosts);
     const history = useHistory();
     const cards = useSelector(state => state.card.filteredCards);
-    const currentUser = useSelector(state => state.user.user);
-    const {upvoteCard, follow} = CardManager();
 
+    // TODO Change it back so that the user Profile is loaded into its own state
+    // TODO That way you you can always get the current profile information
+    const currentUser = useSelector(state => state.user.userProfile);
+    const {upvoteCard, follow} = CardManager();
+    
     const redirect = user => {
         dispatch(getUserProfile(user));
         dispatch(getUserProfileCards(user));
         history.push(`profile/${user.username}`);
     }
+    
+    useEffect(() => {
+        dispatch(getUserProfileCards(currentUser));
+    }, [dispatch, userUpvotedCount.length, currentUser]);
+    
     const cardsList = cards && cards.map((card, i) => {
-    const user = card.created_by;
-    const username = card.created_by.username;
-
+        const user = card.created_by;
+        const username = card.created_by.username;
+        
         return(
             <Card key={i} id="card">
                 <Card.Content id="content">
@@ -79,7 +89,6 @@ const ProfileCardList = () => {
                     <Menu.Item icon="comment outline" onClick={()=>console.log(card.upvotes)}/>
                 </Menu>
                 </Card.Content> 
-                <button onClick={() => console.log(user)}>CARD</button>
             </Card>
         )
     });

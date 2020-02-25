@@ -76,10 +76,9 @@ const CardList = () => {
                     :
                         <Menu.Item icon="star" id="upvoted"/>
                     }
-                    <Menu.Item icon="comment outline" onClick={()=>console.log(card.upvotes)}/>
+                    <Menu.Item icon="comment outline" onClick={()=>console.log(card)}/>
                 </Menu>
                 </Card.Content> 
-                <button onClick={() => console.log(user)}>CARD</button>
             </Card>
         )
     });
