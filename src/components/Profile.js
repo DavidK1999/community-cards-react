@@ -11,16 +11,22 @@ const Profile = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector(state => state.profile.userProfile);
-    const allCards = useSelector(state => state.card.cards);
+    const allCards = useSelector(state => state.card.filteredCards);
     const createdPosts = user.createdPosts;
-    console.log(allCards);
+    const profileUser = useSelector(state => state.user.userProfile);
+    let upvotes = 0;
+
+    allCards.forEach(card => {
+        upvotes += card.upvotes.length;
+    });
 
     const index = () => {
         dispatch(getUserProfile({}));
         history.push("/");
     }
     
-    let upvotes = allCards.filter(card => card.upvotes.includes(user._id));
+
+    // TODO loop through the user profile posts and add together their upvotes
     return (
         <>
         <Header as="h2" id="user-summary-header">
@@ -38,12 +44,12 @@ const Profile = () => {
             <Card.Content id="stats">
                 <Label><Icon name="users"/>Followers: {user.followers && user.followers.length}</Label>
                 <Label><Icon name="user plus"/>Following {user.following && user.following.length}</Label>
-                <Label><Icon name="star"/>Upvotes: {upvotes.length}</Label>
-                <Label><Icon name="sticky note"/>Following {createdPosts}</Label>
+                <Label><Icon name="star"/>Upvotes: {upvotes}</Label>
+                <Label><Icon name="sticky note"/>Following {profileUser && profileUser.following.length}</Label>
             </Card.Content>
         </Card>
         <div>
-            <ProfileCardList/>
+            <ProfileCardList profileUser={profileUser}/>
         </div>
         </>
 

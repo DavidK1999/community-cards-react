@@ -12,7 +12,6 @@ export default function Card(state=initialState, action) {
         return {...state, cards: state.cards = action.value}
     
     case CardActionTypes.FILTERCARDS:
-        console.log(action.value);
         return {...state, filteredCards: state.filteredCards = action.value}
         
         default:

@@ -4,7 +4,8 @@ const initialState = {
     form : '',
     user: {},
     loggedIn: false,
-    userProfile: {}
+    userProfile: {},
+    isProfile: false
 }
 
 export default function User(state=initialState, action) {
@@ -33,6 +34,7 @@ export default function User(state=initialState, action) {
     
     case UserTypes.USERPROFILE:
         return {
+            ...state, isProfile: state.isProfile = true,
             ...state, userProfile: state.userProfile = action.value
         }
         

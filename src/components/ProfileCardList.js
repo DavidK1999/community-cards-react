@@ -8,30 +8,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import '../styles/feed.css';
 import { useHistory } from 'react-router-dom';
 
-const ProfileCardList = () => {
+const ProfileCardList = ({profileUser}) => {
     const dispatch = useDispatch();
-    const filteredCards = useSelector(state => state.card.filteredCards);
-    const userUpvotedCount = useSelector(state => state.user.user.upvotedPosts);
+    const currentUser = useSelector(state => state.user.user);
+
     const history = useHistory();
     const cards = useSelector(state => state.card.filteredCards);
 
-    // TODO Change it back so that the user Profile is loaded into its own state
-    // TODO That way you you can always get the current profile information
-    const currentUser = useSelector(state => state.user.userProfile);
     const {upvoteCard, follow} = CardManager();
     
     const redirect = user => {
         dispatch(getUserProfile(user));
-        dispatch(getUserProfileCards(user));
         history.push(`profile/${user.username}`);
     }
     
-    useEffect(() => {
-        dispatch(getUserProfileCards(currentUser));
-    }, [dispatch, userUpvotedCount.length, currentUser]);
-    
     const cardsList = cards && cards.map((card, i) => {
-        const user = card.created_by;
         const username = card.created_by.username;
         
         return(
@@ -52,7 +43,7 @@ const ProfileCardList = () => {
                     <Dropdown.Menu id="user-dropdown-menu">
                         <Dropdown.Header icon='cog' content='Options' />
                         <Dropdown.Divider />
-                        {currentUser.following && !currentUser.following.includes(card.created_by._id) 
+                        { currentUser.following && ! currentUser.following.includes(card.created_by._id) 
                         ?
                         <Dropdown.Item onClick={() => follow(card.created_by)}><Icon name="user circle"/>Follow {username}</Dropdown.Item>
                         :
@@ -87,6 +78,7 @@ const ProfileCardList = () => {
                         <Menu.Item icon="star" id="upvoted"/>
                     }
                     <Menu.Item icon="comment outline" onClick={()=>console.log(card.upvotes)}/>
+                    <button onClick={() => console.log(profileUser)}>USER</button>
                 </Menu>
                 </Card.Content> 
             </Card>

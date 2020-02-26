@@ -3,7 +3,6 @@ import {Card, Icon, Menu, Dropdown, Label, Divider} from 'semantic-ui-react';
 import CardManager from '../hooks/CardManager';
 import reactStringReplace from 'react-string-replace';
 import {getUserProfile} from '../redux/actions/user';
-import {getUserProfileCards} from '../redux/actions/card';
 import { useSelector, useDispatch } from 'react-redux';
 import '../styles/feed.css';
 import { useHistory } from 'react-router-dom';
@@ -16,8 +15,8 @@ const CardList = () => {
     const {upvoteCard, follow} = CardManager();
 
     const redirect = user => {
+        console.log(user);
         dispatch(getUserProfile(user));
-        dispatch(getUserProfileCards(user));
         history.push(`profile/${user.username}`);
     }
     const cardsList = cards && cards.map((card, i) => {

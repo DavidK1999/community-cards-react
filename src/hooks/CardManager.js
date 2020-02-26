@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import { createCard, upvote, followUser } from '../redux/actions/user';
+import { createCard, upvote, followUser, getUserProfile } from '../redux/actions/user';
 import { useDispatch, useSelector } from 'react-redux';
 
 const CardManager = () => {
@@ -9,6 +9,7 @@ const CardManager = () => {
 
 
     const handleSubmit = async e => {
+        console.log('HI');
         // TODO make this the async part not the actions
         dispatch(createCard(inputs));
     }
@@ -23,6 +24,7 @@ const CardManager = () => {
     }
 
     const upvoteCard = card => {
+        console.log(card);
         dispatch(upvote(card));
     }
 

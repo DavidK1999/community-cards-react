@@ -15,9 +15,10 @@ export const getCards = () => {
 }
 
 export const getUserProfileCards = value => {
-    console.log('Hi');
+    console.log(value);
     return async (dispatch, getState) => {
         try {
+            console.log("HELLO");
             const filteredCards = await fetch(`http://localhost:8000/card/profile/${value._id}`);
             const parsedAllCards = await filteredCards.json();
             console.log(parsedAllCards);

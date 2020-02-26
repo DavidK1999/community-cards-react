@@ -54,9 +54,9 @@ export const upvote = card => {
         try {
             const user = getState().user.user;
             console.log(user);
-            const upvotedCard = await fetch(`http://localhost:8000/user/upvote/${card._id}`, {
+            const upvotedCard = await fetch(`http://localhost:8000/user/upvote/${user._id}`, {
                 method: 'PUT',
-                body: JSON.stringify(user),
+                body: JSON.stringify(card),
                 headers: {'Content-Type' : 'application/json'}
             });
             const updatedUpvotedCount = await upvotedCard.json();
@@ -82,7 +82,6 @@ export const followUser = user => {
 }
 
 export const getUserProfile = user => {
-    console.log(user);
     return async (dispatch, getState) => {
         try {
             const userProfile = await fetch(`http://localhost:8000/user/profile/${user._id}`);

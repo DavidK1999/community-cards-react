@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {useHistory} from 'react-router-dom';
-import {getCards} from './redux/actions/card';
+import {getCards, getUserProfileCards} from './redux/actions/card';
 import Authenication from './components/Authentication';
 import CardCreator from './components/CardCreator';
 import 'semantic-ui-css/semantic.min.css'
@@ -10,14 +9,22 @@ import './styles/base.css';
 
 const App = () => {
     const dispatch = useDispatch();
+    const profileUser = useSelector(state => state.user.userProfile);
+    console.log(profileUser);
     const userPostCount = useSelector(state => state.user.user.createdPosts);
     const userUpvotedCount = useSelector(state => state.user.user.upvotedPosts);
-    const userProfile = useSelector(state => state.user.userProfile);
+    const profileUserPostCount = useSelector(state => state.user.userProfile.createdPosts);
 
     useEffect(() => {
-        dispatch(getCards())
+      dispatch(getCards())
     }, [dispatch, userPostCount, userUpvotedCount]);
-  return (
+
+    useEffect(() => {
+      console.log(profileUser);
+      dispatch(getUserProfileCards(profileUser))
+    }, [dispatch, profileUser, profileUserPostCount, userUpvotedCount]);
+  
+    return (
     <>
       <Authenication />
       <Layout/>
