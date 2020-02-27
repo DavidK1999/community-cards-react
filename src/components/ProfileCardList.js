@@ -14,12 +14,22 @@ const ProfileCardList = ({profileUser}) => {
 
     const history = useHistory();
     const cards = useSelector(state => state.card.filteredCards);
+    console.log(cards);
 
     const {upvoteCard, follow} = CardManager();
     
     const redirect = user => {
         dispatch(getUserProfile(user));
         history.push(`profile/${user.username}`);
+    }
+
+    const followUser = user => {
+        follow(user);
+        dispatch(getUserProfile(user));
+    }
+
+    const upvoteProfile = card => {
+        upvoteCard(card, currentUser);
     }
     
     const cardsList = cards && cards.map((card, i) => {
@@ -43,9 +53,9 @@ const ProfileCardList = ({profileUser}) => {
                     <Dropdown.Menu id="user-dropdown-menu">
                         <Dropdown.Header icon='cog' content='Options' />
                         <Dropdown.Divider />
-                        { currentUser.following && ! currentUser.following.includes(card.created_by._id) 
+                        { currentUser.following && !currentUser.following.includes(card.created_by._id) 
                         ?
-                        <Dropdown.Item onClick={() => follow(card.created_by)}><Icon name="user circle"/>Follow {username}</Dropdown.Item>
+                        <Dropdown.Item onClick={() => followUser(card.created_by)}><Icon name="user circle"/>Follow {username}</Dropdown.Item>
                         :
                         <Dropdown.Item><Icon name="check"/>Following</Dropdown.Item>
                         }
@@ -73,12 +83,13 @@ const ProfileCardList = ({profileUser}) => {
                 <Menu id="card-bar" secondary>
                     {!card.upvotes.includes(currentUser._id)  
                     ?
-                        <Menu.Item icon="star outline" onClick={() => upvoteCard(card)}/>
+                        <Menu.Item icon="star outline" onClick={() => upvoteProfile(card)}/>
                     :
                         <Menu.Item icon="star" id="upvoted"/>
                     }
-                    <Menu.Item icon="comment outline" onClick={()=>console.log(card.upvotes)}/>
+                    <Menu.Item icon="comment outline" onClick={()=>console.log(card)}/>
                     <button onClick={() => console.log(profileUser)}>USER</button>
+                    <button onClick={() => console.log(currentUser)}>CURRENTUSER</button>
                 </Menu>
                 </Card.Content> 
             </Card>

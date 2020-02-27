@@ -42,10 +42,10 @@ const Profile = () => {
         </Card.Header> 
             <Card.Content extra>{user.email}</Card.Content>
             <Card.Content id="stats">
-                <Label><Icon name="users"/>Followers: {user.followers && user.followers.length}</Label>
-                <Label><Icon name="user plus"/>Following {user.following && user.following.length}</Label>
+                <Label><Icon name="users"/>Followers: {profileUser.followers && profileUser.followers.length}</Label>
+                <Label><Icon name="user plus"/>Following {profileUser.following && profileUser.following.length}</Label>
                 <Label><Icon name="star"/>Upvotes: {upvotes}</Label>
-                <Label><Icon name="sticky note"/>Following {profileUser && profileUser.following.length}</Label>
+                <Label><Icon name="sticky note"/>Cards {allCards.length}</Label>
             </Card.Content>
         </Card>
         <div>

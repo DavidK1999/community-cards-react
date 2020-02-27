@@ -1,5 +1,6 @@
 import {useState} from 'react';
-import { createCard, upvote, followUser, getUserProfile } from '../redux/actions/user';
+import { upvotePost, getUserProfileCards } from '../redux/actions/card';
+import { createCard, storeUpvote, followUser, followedUser } from '../redux/actions/user';
 import { useDispatch, useSelector } from 'react-redux';
 
 const CardManager = () => {
@@ -23,13 +24,15 @@ const CardManager = () => {
         setInputs({...inputs, [e.target.name] : e.target.value});
     }
 
-    const upvoteCard = card => {
-        console.log(card);
-        dispatch(upvote(card));
+    const upvoteCard = async (card, user) => {
+        dispatch(storeUpvote(card));
+        dispatch(upvotePost(card))
+        setTimeout(() => dispatch(getUserProfileCards(user)));
     }
 
     const follow = user => {
         dispatch(followUser(user));
+        dispatch(followedUser(user));
     }
 
     return {handleSubmit, handleInputChange, upvoteCard, follow}

@@ -49,7 +49,7 @@ export const createCard = inputs => {
     }
 }
 
-export const upvote = card => {
+export const storeUpvote = card => {
     return async (dispatch, getState) => {
         try {
             const user = getState().user.user;
@@ -60,13 +60,15 @@ export const upvote = card => {
                 headers: {'Content-Type' : 'application/json'}
             });
             const updatedUpvotedCount = await upvotedCard.json();
-            console.log(updatedUpvotedCount);
             dispatch({type: UserActionTypes.CREATE, value: updatedUpvotedCount});
         } catch (error) {
             console.log ("ERROR :", error);
         }
     }
 }
+
+
+
 
 export const followUser = user => {
     return async (dispatch, getState) => {
@@ -81,11 +83,28 @@ export const followUser = user => {
     }
 }
 
+export const followedUser = user => {
+    return async (dispatch, getState) => {
+        const currentUser = getState().user.user;
+        const followed = await fetch(`http://localhost:8000/user/followedBy/${currentUser._id}`, {
+            method: 'PUT',
+            body: JSON.stringify(user),
+            headers: {'Content-Type' : 'application/json'}
+        });
+        const parsedFollowed = await followed.json();
+        console.log(parsedFollowed);
+        dispatch({type: UserActionTypes.USERPROFILE, value: parsedFollowed});
+        console.log(parsedFollowed);
+
+    }
+}
+
 export const getUserProfile = user => {
     return async (dispatch, getState) => {
         try {
             const userProfile = await fetch(`http://localhost:8000/user/profile/${user._id}`);
             const parsedUserProfile = await userProfile.json();
+            console.log(parsedUserProfile);
             dispatch({type: UserActionTypes.USERPROFILE, value: parsedUserProfile});
             
         } catch (error) {

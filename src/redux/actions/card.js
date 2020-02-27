@@ -21,11 +21,38 @@ export const getUserProfileCards = value => {
             console.log("HELLO");
             const filteredCards = await fetch(`http://localhost:8000/card/profile/${value._id}`);
             const parsedAllCards = await filteredCards.json();
-            console.log(parsedAllCards);
             dispatch({type: CardActionTypes.FILTERCARDS, value: parsedAllCards});
 
         } catch (error) {
             console.log ("ERROR :", error);
         }
+    }
+}
+
+
+export const upvotePost = card => {
+    return async (dispatch, getState) => {
+        try {
+            const user = getState().user.user;
+            console.log(user);
+            await fetch(`http://localhost:8000/card/upvote/${card._id}`, {
+                method: 'PUT',
+                body: JSON.stringify(user),
+                headers: {'Content-Type' : 'application/json'}
+            });
+            // const updatedUpvotedCount = await upvotedCard.json();
+            // console.log(updatedUpvotedCount)
+            // dispatch({type: CardActionTypes.CREATE, value: updatedUpvotedCount});
+        } catch (error) {
+            console.log ("ERROR :", error);
+        }
+    }
+}
+
+
+export const clearCards = () => {
+    return {
+        type: CardActionTypes.GET,
+        value: []
     }
 }

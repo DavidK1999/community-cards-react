@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleForm, deauthenticate } from '../redux/actions/user'
+import { clearCards } from '../redux/actions/card'
 import { getUserProfile } from '../redux/actions/profile'
 import { Menu, Header, Icon } from 'semantic-ui-react';
 import {useHistory} from 'react-router-dom';
@@ -25,6 +26,7 @@ const Navigation = () => {
     const logout = () => {
         dispatch(deauthenticate());
         dispatch(getUserProfile({}));
+        dispatch(clearCards());
     }
 
 

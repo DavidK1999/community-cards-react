@@ -6,6 +6,7 @@ import {getUserProfile} from '../redux/actions/user';
 import { useSelector, useDispatch } from 'react-redux';
 import '../styles/feed.css';
 import { useHistory } from 'react-router-dom';
+import { getUserProfileCards } from '../redux/actions/card';
 
 const CardList = () => {
     const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const CardList = () => {
     const redirect = user => {
         console.log(user);
         dispatch(getUserProfile(user));
+        dispatch(getUserProfileCards(user));
         history.push(`profile/${user.username}`);
     }
     const cardsList = cards && cards.map((card, i) => {
