@@ -67,11 +67,11 @@ const CardList = () => {
                 </Card.Meta>
                 <Divider/>
                 <Card.Meta>
-                    Upvotes: {card.upvotes.length}
+                    Upvotes: {card.upvotes && card.upvotes.length}
                 </Card.Meta>
                 <Divider/>
                 <Menu id="card-bar" secondary>
-                    {!card.upvotes.includes(currentUser._id)  
+                    {card.upvotes && !card.upvotes.includes(currentUser._id)  
                     ?
                         <Menu.Item icon="star outline" onClick={() => upvoteCard(card)}/>
                     :

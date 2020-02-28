@@ -93,8 +93,8 @@ export const followedUser = user => {
         });
         const parsedFollowed = await followed.json();
         console.log(parsedFollowed);
-        dispatch({type: UserActionTypes.USERPROFILE, value: parsedFollowed});
-        console.log(parsedFollowed);
+        // dispatch({type: UserActionTypes.USERPROFILE, value: parsedFollowed});
+        // console.log(parsedFollowed);
 
     }
 }
