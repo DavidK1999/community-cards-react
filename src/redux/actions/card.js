@@ -14,6 +14,15 @@ export const getCards = () => {
     }
 }
 
+export const getFeedCards = () => {
+    return async (dispatch, getState) => {
+        const currentUser = getState().user.user;
+        const feedCards = await fetch(`http://localhost:8000/card/feed/${currentUser._id}`);
+        const parsedFeedCards = await feedCards.json();
+        dispatch({type: CardActionTypes.GET, value: parsedFeedCards});
+    }
+}
+
 export const getUserProfileCards = value => {
     console.log(value);
     return async (dispatch, getState) => {
