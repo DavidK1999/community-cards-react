@@ -2,11 +2,11 @@ import React from 'react';
 import {Card, Icon, Menu, Dropdown, Label, Divider} from 'semantic-ui-react';
 import CardManager from '../hooks/CardManager';
 import reactStringReplace from 'react-string-replace';
-import {getUserProfile} from '../redux/actions/user';
+import {getUserProfile, followedUser} from '../redux/actions/user';
 import { useSelector, useDispatch } from 'react-redux';
 import '../styles/feed.css';
 import { useHistory } from 'react-router-dom';
-import { getUserProfileCards } from '../redux/actions/card';
+import { getUserProfileCards, taggedCards } from '../redux/actions/card';
 
 const CardList = () => {
     const dispatch = useDispatch();
@@ -16,6 +16,7 @@ const CardList = () => {
     const {upvoteCard, follow} = CardManager();
 
     const redirect = user => {
+        // TODO MAKE IT SO THAT THE URL FILLS IN THE INFORMATION
         console.log(user);
         dispatch(getUserProfile(user));
         dispatch(getUserProfileCards(user));
@@ -60,7 +61,7 @@ const CardList = () => {
                     
                 </Card.Meta>
                 <Card.Description id="body-of-card">
-                    {reactStringReplace(card.body, /(#\S[a-zA-Z]*)/gi, (match, i) => <button key={i} className="tag">{match}</button>)}
+                    {reactStringReplace(card.body, /(#\S[a-zA-Z]*)/gi, (match, i) => <button key={i} className="tag" onClick={() => dispatch(taggedCards(match))}>{match}</button>)}
                 </Card.Description>
                 <Card.Meta>
                 <span className='date'>{card.timestamp}</span>

@@ -2,7 +2,8 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleForm, deauthenticate } from '../redux/actions/user'
 import { clearCards } from '../redux/actions/card'
-import { getUserProfile } from '../redux/actions/profile'
+import { getUserProfile } from '../redux/actions/user'
+import {getUserProfileCards} from '../redux/actions/card';
 import { Menu, Header, Icon } from 'semantic-ui-react';
 import {useHistory} from 'react-router-dom';
 import '../styles/navigation.css'
@@ -20,6 +21,7 @@ const Navigation = () => {
 
     const redirect = () => {
         dispatch(getUserProfile(userProfile));
+        dispatch(getUserProfileCards(userProfile));
         history.replace(`profile/${userProfile.username}`)
     }
 
@@ -50,12 +52,6 @@ const Navigation = () => {
                 />
                 
                 <Menu.Item
-                name="People who I follow "
-                icon="users"
-                onClick={() => handleForm('create')}
-                />
-                
-                <Menu.Item
                 name="SignOut "
                 icon="sign out"
                 onClick={() => logout()}
@@ -70,40 +66,6 @@ const Navigation = () => {
                 name="Register"
                 onClick={() => handleForm('register')}
                 />
-                
-
-                {/* <Menu.Item id="sub-menu">
-                    <Icon name="sign out"/>
-                    <Icon name="users"/>
-                    <Icon name="sticky note"/>
-                    <Icon name="user circle"/>
-                </Menu.Item> */}
-                
-                {/* <Dropdown
-                text={userProfile.username}
-                icon='user'
-                pointing="left"
-                button
-                labeled
-                className='icon'
-                id="user-dropdown"
-                >
-                    <Dropdown.Menu id="user-dropdown-menu">
-                        <Dropdown.Header icon='cog' content='Options' />
-                        <Dropdown.Divider />
-                        <Dropdown.Item icon='user circle' text='My Profile'/>
-                        <Dropdown.Item icon='sticky note' text='My Cards'/>
-                        <Dropdown.Item icon='users' text='People I Follow'/>
-                        <Dropdown.Item 
-                        icon='sign-out' 
-                        text='Logout'
-                        onClick={() => dispatch(deauthenticate())}
-                    />
-                    </Dropdown.Menu>
-                </Dropdown>   */}
-
-
-
         </Menu>
     );
 }

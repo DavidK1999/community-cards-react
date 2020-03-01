@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Header, Image, Icon, Card, Label } from 'semantic-ui-react';
 import '../styles/profile.css';
 import { useSelector, dispatch, useDispatch } from 'react-redux';
@@ -9,11 +9,14 @@ import { getUserProfile } from '../redux/actions/profile';
 const Profile = () => {
     
     const history = useHistory();
+    const [user, setUser] = useState({});
+    const [allCards, setAllCards] = useState([]);
     const dispatch = useDispatch();
-    const user = useSelector(state => state.profile.userProfile);
-    const allCards = useSelector(state => state.card.filteredCards);
+    // const user = useSelector(state => state.profile.userProfile);
+    // const allCards = useSelector(state => state.card.filteredCards);
     const createdPosts = user.createdPosts;
     const profileUser = useSelector(state => state.user.userProfile);
+    const userURL = history.location.pathname;
     let upvotes = 0;
 
     allCards.forEach(card => {
@@ -24,6 +27,25 @@ const Profile = () => {
         dispatch(getUserProfile({}));
         history.push("/");
     }
+
+    useEffect(() => {
+        const getProfile = async () => {
+            const profile = await fetch(`http://localhost:8000/user${userURL}`);
+            const parsedProfile = await profile.json();
+            setUser(parsedProfile);
+        }
+
+        const getProfileCards = async () => {
+            const cards = await fetch(`http://localhost:8000/card${userURL}`);
+            const parsedCards = await cards.json();
+            console.log(parsedCards);
+            setAllCards(parsedCards);
+
+        }
+
+        getProfile();
+        getProfileCards();
+    }, [userURL, setUser]);
     
 
     // TODO loop through the user profile posts and add together their upvotes
@@ -49,7 +71,7 @@ const Profile = () => {
             </Card.Content>
         </Card>
         <div>
-            <ProfileCardList profileUser={profileUser}/>
+            <ProfileCardList profileUser={user} cards={allCards}/>
         </div>
         </>
 

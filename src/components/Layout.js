@@ -23,6 +23,7 @@ const Layout = () => {
                 <Grid.Column textAlign="center" id="feed-column">
                     <Route exact path="/" 
                     render={(props) => <Feed location={props.location}/>}/>
+                    {/* // TODO ADD A FETCH IN THE PROFILE COMPONENT THAT FETCHES THE BACKEND ON MOUNT */}
                     <Route exact path="/profile/:username" component={Profile}/>
                 </Grid.Column>
                 <Grid.Column>

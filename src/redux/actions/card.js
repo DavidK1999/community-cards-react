@@ -69,3 +69,17 @@ export const clearCards = () => {
         value: []
     }
 }
+
+export const taggedCards = tag => {
+    console.log(tag.substring(1));
+    return async (dispatch, getState) => {
+        try {
+           const taggedCards =  await fetch(`http://localhost:8000/card/tagged/${tag.substring(1)}`);
+           const parsedTaggedCards = await taggedCards.json();
+           dispatch({type: CardActionTypes.GET, value: parsedTaggedCards});
+
+        } catch (error) {
+            console.log('Error');
+        }
+    }
+}

@@ -8,12 +8,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import '../styles/feed.css';
 import { useHistory } from 'react-router-dom';
 
-const ProfileCardList = ({profileUser}) => {
+const ProfileCardList = ({profileUser, cards}) => {
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.user.user);
 
     const history = useHistory();
-    const cards = useSelector(state => state.card.filteredCards);
+    // const cards = useSelector(state => state.card.filteredCards);
     console.log(cards);
 
     const {upvoteCard, follow} = CardManager();
@@ -29,7 +29,7 @@ const ProfileCardList = ({profileUser}) => {
     }
 
     const upvoteProfile = card => {
-        upvoteCard(card, currentUser);
+        upvoteCard(card, card.created_by);
     }
     
     const cardsList = cards && cards.map((card, i) => {

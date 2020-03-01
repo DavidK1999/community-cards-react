@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const CardManager = () => {
     const [inputs, setInputs] = useState({});
-    // const user = useSelector(state => state.user.user);
+    const user = useSelector(state => state.user.user);
     const dispatch = useDispatch();
 
 
@@ -21,7 +21,7 @@ const CardManager = () => {
         const tagged = duplicateText.match(regex);
         let strippedTags = tagged && tagged.map(tag => tag.substring(1));
         inputs.tags = strippedTags;
-        setInputs({...inputs, [e.target.name] : e.target.value});
+        setInputs({...inputs, [e.target.name] : e.target.value, username: user.username});
     }
 
     const upvoteCard = async (card, user) => {
@@ -30,7 +30,7 @@ const CardManager = () => {
         setTimeout(() => dispatch(getUserProfileCards(user)));
     }
 
-    const follow = user => {
+    const follow = (user, callback) => {
         dispatch(followUser(user));
         dispatch(followedUser(user));
     }
