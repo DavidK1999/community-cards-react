@@ -18,11 +18,6 @@ const ProfileCardList = ({profileUser, cards}) => {
 
     const {upvoteCard, follow} = CardManager();
     
-    const redirect = user => {
-        dispatch(getUserProfile(user));
-        history.push(`profile/${user.username}`);
-    }
-
     const followUser = user => {
         follow(user);
         dispatch(getUserProfile(user));
@@ -39,7 +34,7 @@ const ProfileCardList = ({profileUser, cards}) => {
             <Card key={i} id="card">
                 <Card.Content id="content">
                 <Card.Header id="card-header">
-                <Label id="user-label" onClick={() => redirect(card.created_by)}>
+                <Label id="user-label" onClick={() => history.replace(`/profile/${card.created_by.username}`)}>
                     <Icon name="user"/>
                     {card.created_by.username}
                 </Label>

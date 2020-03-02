@@ -27,7 +27,7 @@ const CardManager = () => {
     const upvoteCard = async (card, user) => {
         dispatch(storeUpvote(card));
         dispatch(upvotePost(card))
-        setTimeout(() => dispatch(getUserProfileCards(user)));
+        // setTimeout(() => dispatch(getUserProfileCards(user)));
     }
 
     const follow = (user, callback) => {

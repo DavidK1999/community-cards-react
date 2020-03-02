@@ -14,23 +14,14 @@ const CardList = () => {
     const cards = useSelector(state => state.card.cards);
     const currentUser = useSelector(state => state.user.user);
     const {upvoteCard, follow} = CardManager();
-
-    const redirect = user => {
-        // TODO MAKE IT SO THAT THE URL FILLS IN THE INFORMATION
-        console.log(user);
-        dispatch(getUserProfile(user));
-        dispatch(getUserProfileCards(user));
-        history.push(`profile/${user.username}`);
-    }
     const cardsList = cards && cards.map((card, i) => {
-    const user = card.created_by;
     const username = card.created_by.username;
 
         return(
             <Card key={i} id="card">
                 <Card.Content id="content">
                 <Card.Header id="card-header">
-                <Label id="user-label" onClick={() => redirect(card.created_by)}>
+                <Label id="user-label" onClick={() => history.push(`/profile/${card.created_by.username}`)}>
                     <Icon name="user"/>
                     {card.created_by.username}
                 </Label>

@@ -12,10 +12,8 @@ const Profile = () => {
     const [user, setUser] = useState({});
     const [allCards, setAllCards] = useState([]);
     const dispatch = useDispatch();
-    // const user = useSelector(state => state.profile.userProfile);
-    // const allCards = useSelector(state => state.card.filteredCards);
+    const currentUser = useSelector(state => state.user.user);
     const createdPosts = user.createdPosts;
-    const profileUser = useSelector(state => state.user.userProfile);
     const userURL = history.location.pathname;
     let upvotes = 0;
 
@@ -30,12 +28,14 @@ const Profile = () => {
 
     useEffect(() => {
         const getProfile = async () => {
+            console.log("PROFILE");
             const profile = await fetch(`http://localhost:8000/user${userURL}`);
             const parsedProfile = await profile.json();
             setUser(parsedProfile);
         }
 
         const getProfileCards = async () => {
+            console.log("CARDS")
             const cards = await fetch(`http://localhost:8000/card${userURL}`);
             const parsedCards = await cards.json();
             console.log(parsedCards);
@@ -45,7 +45,7 @@ const Profile = () => {
 
         getProfile();
         getProfileCards();
-    }, [userURL, setUser]);
+    }, [userURL, setUser, currentUser.upvotedPosts, currentUser.createdPosts]);
     
 
     // TODO loop through the user profile posts and add together their upvotes
@@ -64,8 +64,8 @@ const Profile = () => {
         </Card.Header> 
             <Card.Content extra>{user.email}</Card.Content>
             <Card.Content id="stats">
-                <Label><Icon name="users"/>Followers: {profileUser.followers && profileUser.followers.length}</Label>
-                <Label><Icon name="user plus"/>Following {profileUser.following && profileUser.following.length}</Label>
+                <Label><Icon name="users"/>Followers: {user.followers && user.followers.length}</Label>
+                <Label><Icon name="user plus"/>Following {user.following && user.following.length}</Label>
                 <Label><Icon name="star"/>Upvotes: {upvotes}</Label>
                 <Label><Icon name="sticky note"/>Cards {allCards.length}</Label>
             </Card.Content>
